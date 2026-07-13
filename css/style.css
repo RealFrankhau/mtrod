@@ -1,0 +1,228 @@
+/* ── RESET & FULLSCREEN LOCK ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100vw; height: 100vh;
+  overflow: hidden; /* NO scrolling */
+  font-family: 'MTR EN';
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── CUSTOM FONTS ── */
+
+@font-face {
+  font-family: 'MTR EN';
+  src: url('../assets/fonts/mtr.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* ── MAIN CONTAINER: full viewport, flex column ── */
+.mtr-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── ROW 1: HEADER (Line & Station selector + Clock) ── */
+.mtr-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 18vh; /* ~18% of viewport height */
+  padding: 0 3vw;
+  flex-shrink: 0;
+  transition: background-color 0.4s ease;
+}
+.mtr-header-left {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+}
+.mtr-header-label {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  line-height: 1;
+}
+.mtr-header-label:hover { opacity: 0.85; }
+.mtr-header-sep {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: #FFFFFF;
+  font-weight: 300;
+  opacity: 0.7;
+}
+.mtr-header-clock {
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  font-family: 'MTR EN';
+  line-height: 1;
+}
+
+/* ── DROPDOWN OVERLAY ── */
+.mtr-dropdown-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.6);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.mtr-dropdown-overlay.active { display: flex; }
+.mtr-dropdown-panel {
+  background: #1a1a2e;
+  border-radius: 1.5rem;
+  padding: 3vh 4vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  min-width: 70vw;
+  max-width: 90vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.mtr-dropdown-panel h3 {
+  color: #fff;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  margin-bottom: 2vh;
+  text-align: center;
+}
+.mtr-line-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5vh 2vw;
+}
+.mtr-line-group {
+  border-radius: 1rem;
+  padding: 1.5vh 1.5vw;
+}
+.mtr-line-group-title {
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  margin-bottom: 1vh;
+  padding-bottom: 0.5vh;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+}
+.mtr-station-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8vh 1vw;
+}
+.mtr-station-btn {
+  background: rgba(255,255,255,0.15);
+  color: #FFFFFF;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 0.6rem;
+  padding: 0.6vh 1.2vw;
+  font-size: clamp(1rem, 2vw, 1.6rem);
+  cursor: pointer;
+  font-family: 'MTR EN';
+  transition: background 0.15s, transform 0.15s;
+  white-space: nowrap;
+}
+.mtr-station-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.05);
+}
+.mtr-station-btn.selected {
+  background: #FFFFFF;
+  color: #000;
+  font-weight: 400;
+}
+.mtr-dropdown-close {
+  display: block;
+  margin: 2vh auto 0;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 1vh 4vw;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  cursor: pointer;
+  font-family: 'MTR EN';
+  transition: background 0.15s;
+}
+.mtr-dropdown-close:hover { background: rgba(255,255,255,0.4); }
+
+/* ── ROWS 2-5: TIMETABLE ── */
+.mtr-row {
+  display: flex;
+  align-items: center;
+  height: 20.5vh; /* 4 rows fill remaining ~82vh */
+  padding: 0 3vw;
+  flex-shrink: 0;
+  position: relative;
+}
+.mtr-row-2 { background: #D3EFFE; }
+.mtr-row-3 { background: #97e3ff; }
+.mtr-row-4 { background: #D3EFFE; }
+.mtr-row-5 { background: #97e3ff; }
+
+/* thick black line between row 3 and row 4 */
+.mtr-divider {
+  height: 0.6vh;
+  background: #000;
+  flex-shrink: 0;
+}
+
+.mtr-row-dest {
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 400;
+  color: #000000;
+  flex: 1;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+.mtr-row-platform {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(70px, 12vw, 110px);
+  height: clamp(70px, 12vw, 110px);
+  border-radius: 50%;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  margin: 0 2vw;
+  flex-shrink: 0;
+  transition: background-color 0.4s ease;
+}
+.mtr-row-eta {
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 400;
+  color: #000000;
+  min-width: clamp(200px, 30vw, 380px);
+  text-align: right;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+/* ── LOADING / EMPTY STATE ── */
+.mtr-row-placeholder {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  color: rgba(0,0,0,0.4);
+  font-weight: 500;
+  flex: 1;
+  text-align: center;
+}
+
+/* ── RESPONSIVE: landscape orientation ── */
+@media (orientation: portrait) {
+  .mtr-header { height: 14vh; }
+  .mtr-row { height: 21vh; }
+  .mtr-header-label { font-size: clamp(2rem, 5vw, 3.5rem); }
+  .mtr-header-clock { font-size: clamp(2.5rem, 6vw, 5rem); }
+  .mtr-row-dest { font-size: clamp(2rem, 5vw, 4rem); }
+  .mtr-row-platform { width: clamp(60px, 10vw, 90px); height: clamp(60px, 10vw, 90px); font-size: clamp(2rem, 4vw, 3rem); }
+  .mtr-row-eta { font-size: clamp(2rem, 5vw, 4rem); min-width: clamp(160px, 24vw, 300px); }
+}
