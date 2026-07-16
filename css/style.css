@@ -201,7 +201,7 @@ html, body {
   font-size: clamp(2.5rem, 6vw, 5.5rem);
   font-weight: 400;
   color: #000000;
-  min-width: clamp(200px, 30vw, 380px);
+  min-width: clamp(240px, 36vw, 460px);
   text-align: right;
   line-height: 1.1;
   letter-spacing: 0.02em;
