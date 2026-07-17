@@ -40,7 +40,7 @@ html, body {
 .mtr-header-left {
   display: flex;
   align-items: center;
-  gap: 2vw;
+  gap: 1vw;
 }
 .mtr-header-label {
   font-size: clamp(2.5rem, 6vw, 5rem);
@@ -56,7 +56,7 @@ html, body {
   font-size: clamp(2.5rem, 6vw, 5rem);
   color: #FFFFFF;
   font-weight: 300;
-  opacity: 0.7;
+  opacity: 1;
 }
 .mtr-header-clock {
   font-size: clamp(3rem, 7vw, 6rem);
@@ -201,7 +201,7 @@ html, body {
   font-size: clamp(2.5rem, 6vw, 5.5rem);
   font-weight: 400;
   color: #000000;
-  min-width: clamp(240px, 36vw, 460px);
+  min-width: clamp(200px, 35vw, 400px);
   text-align: right;
   line-height: 1.1;
   letter-spacing: 0.02em;

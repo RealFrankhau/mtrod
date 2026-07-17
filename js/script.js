@@ -329,7 +329,7 @@ function selectStation(line, sta) {
 function formatEta(mins, lang) {
   const m = parseInt(mins, 10);
   if (isNaN(m) || m < 0) return '—';
-  if (m === 0) return lang === 'en' ? 'Departing' : '即將開出';
+  if (m === 0) return lang === 'en' ? 'Departing' : '正在離開';
   if (m === 1) return lang === 'en' ? 'Arriving' : '即將抵達';
   return lang === 'en' ? m + ' min' : m + ' 分鐘';
 }
